@@ -12,6 +12,7 @@ pub mod grady_sol {
         msg!("Welcome to Grady Sol!. Your very own grade tracker!");
         let tracker = &mut ctx.accounts.grade_tracker;
         tracker.subjects = Vec::new();
+        tracker.bump = ctx.bumps.grade_tracker;
 
         msg!("Grade tracker initialized successfully!");
         Ok(())
