@@ -78,7 +78,7 @@ pub struct UpdateGrade<'info> {
 #[account]
 #[derive(InitSpace)] //e InitSpace added for grade tracker because Vec<Subject> had memory unknown at the time of creation
 pub struct GradeTracker {
-    #[max_len(50*100)]
+    #[max_len(50)]
     pub subjects: Vec<Subject>,
     pub bump: u8,
 }
