@@ -52,7 +52,13 @@ pub mod grady_sol {
 pub struct Initialize<'info> {
     #[account(mut)]
     pub signer: Signer<'info>,
-    #[account(init,payer=signer,space=ANCHOR_DISCRIMINATOR_SIZE+Subject::INIT_SPACE)]
+    #[account(
+        init,
+        payer = signer,
+        space = ANCHOR_DISCRIMINATOR_SIZE + GradeTracker::INIT_SPACE,
+        seeds = [b"grade-tracker", signer.key().as_ref()],
+        bump
+    )]
     pub grade_tracker: Account<'info, GradeTracker>,
     pub system_program: Program<'info, System>,
 }
@@ -66,7 +72,9 @@ pub struct UpdateGrade<'info> {
 }
 
 #[account]
+#[derive(InitSpace)]  //e InitSpace added for grade tracker because Vec<Subject> had memory unknown at the time of creation
 pub struct GradeTracker {
+    #[max_len(50*100)]
     pub subjects: Vec<Subject>,
 }
 
